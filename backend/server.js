@@ -4,12 +4,12 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import postRoutes from "./routes/post.route.js";
+import notificationRoutes from "./routes/notification.route.js";
 //db
 import { connectDB } from "./config/db.js";
 //middleware
 import cookieParser from "cookie-parser";
 import { v2 as claoudinaray } from "cloudinary";
-
 
 dotenv.config();
 claoudinaray.config({
@@ -28,6 +28,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/notifications",notificationRoutes);
 
 app.listen(PORT, () => {
   connectDB();
