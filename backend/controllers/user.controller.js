@@ -17,11 +17,12 @@ export const getUserProfile = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
 export const followUnfollowUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const userToModify = await User.findById(id);
-    const currentUser = await User.findById(req.user._id);
+    const userToModify = await User.findById(id);//user to follow/unfollow
+    const currentUser = await User.findById(req.user._id); //me
 
     if (id === req.user._id.toString()) {
       return res
@@ -36,8 +37,8 @@ export const followUnfollowUser = async (req, res) => {
     const isFollowing = currentUser.following.includes(id);
     if (isFollowing) {
       //unfollow user
-      await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } });
-      await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } });
+      await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } }); //find id and remove req.user._id from followers
+      await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } }); //find req.user._id and remove id from following
 
       //   //send notifications
       //   const newNotification = new Notification({
@@ -51,8 +52,8 @@ export const followUnfollowUser = async (req, res) => {
       res.status(200).json({ message: "Unfollowed successfully" });
     } else {
       // follow user
-      await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } });
-      await User.findByIdAndUpdate(req.user._id, { $push: { following: id } });
+      await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } });//find id and add req.user._id to followers
+      await User.findByIdAndUpdate(req.user._id, { $push: { following: id } });//find req.user._id and add id to following
 
       //send notifications
       const newNotification = new Notification({
@@ -70,17 +71,18 @@ export const followUnfollowUser = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
 export const getSuggestedUsers = async (req, res) => {
   try {
     const userId = req.user._id;
 
     const userFollowedByMe = await User.findById(userId).select("following");
 
-    const users = await User.aggregate([
+    const users = await User.aggregate([ //aggregate is used to get random users
       {
         $match: {
           _id: { $ne: userId },
-        },
+        },//find all users except me
       },
       {
         $sample: { size: 10 },
@@ -100,6 +102,7 @@ export const getSuggestedUsers = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
 export const updateUser = async (req, res) => {
   const { fullname, email, username, currentPassword, newPassword, bio, link } =
     req.body;
