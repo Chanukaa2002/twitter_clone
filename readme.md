@@ -55,10 +55,9 @@ This is the backend implementation of a Twitter Clone application, designed to p
 
 ## Documentation
 
-<!-- ### System Design Document
-
-For a detailed overview of the system's architecture, database design, and more, refer to the **System Design Document (SDD)**.
-
+### System Design Document
+For a detailed overview of the system's architecture, database design, and more, refer to the **[System Design Document (SDD)](https://docs.google.com/document/d/1TWSfwC2-74o87TGzWJ7X7MEeW888F5wjSHA0_9dgMYI/edit?usp=sharing)**.
+<!-- 
 ### API Endpoints
 
 A full list of endpoints and usage examples is available in the **API Documentation**. -->
