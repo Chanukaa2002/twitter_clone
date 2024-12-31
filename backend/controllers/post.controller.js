@@ -106,6 +106,7 @@ export const likeUnlikePost = async (req, res) => {
   }
 };
 
+
 export const commentOnPost = async (req, res) => {
   try {
     const { text } = req.body;
